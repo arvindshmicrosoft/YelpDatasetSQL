@@ -18,19 +18,25 @@ business interruption, loss of business information, or other pecuniary loss) ar
 to use the sample scripts or documentation, even if Microsoft has been advised of the possibility of such damages. 
 */
 
+USE YelpReviews
+GO
+
 DROP TABLE IF EXISTS Business
 GO
 
 SELECT business_id,business_name,neighborhood,business_address,business_city,business_state,postal_code,latitude,longitude,stars,review_count,is_open,attributes,categories,business_hours,item_type
 INTO Business
-FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServer\data\yelp_academic_dataset_business.json', FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.fmt') as j
+FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServerData\yelp_academic_dataset_business.json'
+	,FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.xml'
+	,CODEPAGE = '65001'
+	) as j
  CROSS APPLY OPENJSON(SingleLine)
  WITH( 
 	business_id varchar(100) '$.business_id', 
-	business_name varchar(500) '$.name', 
-	neighborhood varchar(100) '$.neighborhood',
-	business_address varchar(1000) '$.address',
-	business_city varchar(500) '$.city',
+	business_name nvarchar(500) '$.name', 
+	neighborhood nvarchar(100) '$.neighborhood',
+	business_address nvarchar(1000) '$.address',
+	business_city nvarchar(500) '$.city',
 	business_state varchar(500) '$.state',
 	postal_code varchar(100) '$.postal_code',
 	latitude float '$.latitude',
@@ -55,10 +61,12 @@ SELECT
 	business_id,
 	user_id 
 INTO Tip
-FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServer\data\yelp_academic_dataset_tip.json', FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.fmt') as j
+FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServerData\yelp_academic_dataset_tip.json'
+	,FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.xml'
+	,CODEPAGE = '65001') as j
  CROSS APPLY OPENJSON(SingleLine)
  WITH( 
-	tip_text varchar(max) '$.text', 
+	tip_text nvarchar(max) '$.text', 
 	tip_date date '$.date', 
 	likes int,
 	business_id varchar(100) '$.business_id', 
@@ -94,11 +102,13 @@ SELECT
 	,compliment_writer
 	,compliment_photos
 INTO YelpUser
-FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServer\data\yelp_academic_dataset_user.json', FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.fmt') as j
+FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServerData\yelp_academic_dataset_user.json'
+	,FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.xml'
+	,CODEPAGE = '65001') as j
  CROSS APPLY OPENJSON(SingleLine)
  WITH( 
 	[user_id] varchar(100) '$.user_id', 
-	user_name varchar(1000) '$.name', 
+	user_name nvarchar(1000) '$.name', 
 	review_count int,
 	yelping_since date, 
 	friends nvarchar(max) as JSON, 
@@ -137,7 +147,9 @@ SELECT
 	,is_funny
 	,is_cool
 INTO Review
- FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServer\data\yelp_academic_dataset_review.json', FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.fmt') as j
+ FROM OPENROWSET (BULK 'C:\YelpDatasetSQLServerData\yelp_academic_dataset_review.json'
+	,FORMATFILE = 'C:\YelpDatasetSQLServer\linebyline.xml'
+	,CODEPAGE = '65001') as j
  CROSS APPLY OPENJSON(SingleLine)
  WITH( 
 	review_id varchar(100) '$.review_id', 

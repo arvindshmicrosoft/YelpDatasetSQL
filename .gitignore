@@ -240,6 +240,3 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/2_ConvertToGraph.sql
-/4_SampleQueries.sql
-/3_GraphAlgorithms.sql

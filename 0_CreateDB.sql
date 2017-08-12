@@ -1,7 +1,17 @@
 /*
 This sample code shows how to import and work with the Yelp Dataset (https://www.yelp.com/dataset_challenge) using Microsoft SQL Server 2017.
 Please first review the terms of use for the dataset on the Yelp website (https://www.yelp.com/html/pdf/Dataset_Challenge_Academic_Dataset_Agreement.pdf).
+*/
 
+-- Database creation for the Yelp Dataset in SQL Server 2017. Please read the comments at the bottom as well.
+CREATE DATABASE YelpReviews
+GO
+
+ALTER DATABASE YelpReviews
+SET RECOVERY SIMPLE
+GO
+
+/*
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
@@ -17,10 +27,3 @@ be liable for any damages whatsoever (including, without limitation, damages for
 business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability 
 to use the sample scripts or documentation, even if Microsoft has been advised of the possibility of such damages. 
 */
-
-CREATE DATABASE YelpReviews
-GO
-
-ALTER DATABASE YelpReviews
-SET RECOVERY SIMPLE
-GO

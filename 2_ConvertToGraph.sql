@@ -33,6 +33,10 @@ CREATE TABLE [dbo].[FinalUser](
 ) AS NODE
 GO
 
+-- for performance purposes, disable default indexes on node table prior to such large insert operations
+ALTER INDEX ALL ON [FinalUser] disable;
+GO
+
 -- Insert existing data from the imported Yelp dataset into a set of nodes, each representing an user
 -- The attributes for each user are stored in the Node table itself
 INSERT [FinalUser]
@@ -60,6 +64,14 @@ SELECT [user_id]
   FROM [dbo].[YelpUser]
 GO
 
+-- Large insert is completed, enable (rebuild) default index on node table
+ALTER INDEX ALL ON [FinalUser] REBUILD;
+GO
+
+-- for performance purposes, disable default indexes on edge table prior to such large insert operations
+ALTER INDEX ALL ON [FinalFriend] DISABLE;
+GO
+
 -- This is an 'edge' table to store the relationships ('friend of') in an edge table
 -- For demonstration purposes we store a representative attribute of the *relationship*
 -- which in this case is a computed value of the total number of reviews submitted by 
@@ -84,6 +96,10 @@ FROM   YelpUserFriend AS UF1
        INNER JOIN
        FinalUser AS F
        ON UF1.friend_user_id = F.user_id;
+GO
+
+-- Large insert is completed, enable (rebuild) default index on edge table
+ALTER INDEX ALL ON [FinalFriend] REBUILD;
 GO
 
 -- Create an additional index to help in the performance of queries later on

@@ -27,12 +27,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4_FullText", "4_FullText", "{1C9A04E2-09FC-464C-B2E1-3C991508C889}"
+	ProjectSection(SolutionItems) = preProject
+		6_FTSExamples.sql = 6_FTSExamples.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A1289B25-A622-4680-9133-639F25D1C6BA}.Default|Default.ActiveCfg = Default
+		{173A7D57-2C20-4EA0-816C-0C2BE62AF3BA}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

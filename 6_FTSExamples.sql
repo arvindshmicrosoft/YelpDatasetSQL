@@ -39,7 +39,7 @@ GO
 -- Look at another column using FTS, this time use PF Changs
 -- This is spelt as PF Changs sometimes but mostly P.F. Chang's
 -- It is interesting to know that FTS will behave ("correctly", from a human point of view) 
--- retrieve all the occurences of P.F. Chang's also.
+-- retrieve all the occurrences of P.F. Chang's also.
 SELECT * FROM Business
 -- WHERE business_name LIKE '%PF Chang%'
 where CONTAINS (business_name, 'PF AND Chang''s')

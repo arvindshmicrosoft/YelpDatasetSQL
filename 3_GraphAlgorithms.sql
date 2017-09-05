@@ -3,6 +3,10 @@ This sample code shows how to import and work with the Yelp Dataset (https://www
 Please first review the terms of use for the dataset on the Yelp website (https://www.yelp.com/html/pdf/Dataset_Challenge_Academic_Dataset_Agreement.pdf).
 */
 
+/*
+Big Thank You! to Craig Freedman (https://blogs.msdn.microsoft.com/craigfr/) for his help implementing the algorithms below
+*/
+
 -- Graph traversal / search algorithms for the Yelp Reviews Dataset in SQL Server 2017
 USE YelpReviews;
 GO

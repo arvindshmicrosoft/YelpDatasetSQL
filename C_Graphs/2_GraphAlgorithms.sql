@@ -130,7 +130,7 @@ FROM (
 		FinalUser AS Person1,
 		FinalFriend FOR PATH AS fo,
 		FinalUser FOR PATH  AS Person2
-	WHERE MATCH(SHORTEST_PATH(Person1(-(fo)->Person2)+))
+	WHERE MATCH(SHORTEST_PATH(Person1(-(fo)->Person2)+))	-- 'ASCII Art'
 	AND Person1.user_id = @OriginUser
 ) AS Q
 WHERE Q.LastNode = @DestUser

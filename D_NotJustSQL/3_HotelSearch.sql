@@ -11,29 +11,11 @@ Your use of these sample T-SQL scripts is also subject to standard license terms
 USE [YelpReviews]
 GO
 
-SELECT COUNT(*)
-FROM Business
-GO
-
--- Review all the business establishments (in this dataset) located in Arizona
-SELECT GEOGRAPHY::Point(latitude, longitude, 4326)
-	,latitude
-	,longitude
-FROM Business
-WHERE business_state = 'AZ'
-GO
-
--- What's the magic number 4326? It is a Spatial Reference ID (SRID)
-SELECT *
-FROM sys.spatial_reference_systems
-WHERE spatial_reference_id = 4326
-GO
-
 -- Imagine we are at State Farm Stadium (informally the University of Phoenix Stadium)
 -- List all hotels within 5 miles of the stadium
 DECLARE @univPhoenixStadium GEOGRAPHY
 
-SET @univPhoenixStadium = GEOGRAPHY::Point(33.528, - 112.263, 4326)
+SET @univPhoenixStadium = GEOGRAPHY::Point(33.528, -112.263, 4326)
 
 SELECT TOP (10) B.business_id
 	,B.business_name
@@ -57,23 +39,23 @@ GO
 -- Residence Inn Phoenix Glendale (business_id 'n3z1qddNQpRdBjuLspRiwg')
 -- Next, we'll search reviews for that hotel and find at least 1 user who submitted 
 -- reviews and to whom we are connected to as a friend
-SELECT TOP(1) * FROM
-(
-SELECT
-	Person1.user_id AS PersonName, 
-	STRING_AGG(Person2.user_id , '->') WITHIN GROUP (GRAPH PATH) AS Friends,
-	LAST_VALUE(Person2.user_id) WITHIN GROUP (GRAPH PATH) as LastNode
-FROM
-	FinalUser AS Person1,
-	FinalFriend FOR PATH AS fo,
-	FinalUser FOR PATH  AS Person2
-WHERE MATCH(SHORTEST_PATH(Person1(-(fo)->Person2){1,2}))
-AND Person1.user_id = 'SqLjqDFQb4st12C7tt_mFA'
-) AS Paths
-WHERE Paths.LastNode -- = 'YOFG4izyaX65xGYFyKjNgw'
-IN (SELECT user_id as review_user_id
-FROM dbo.Review
-where business_id = 'n3z1qddNQpRdBjuLspRiwg')
+SELECT TOP (1) *
+FROM (
+	SELECT Person1.user_id AS PersonName
+		,STRING_AGG(Person2.user_id, '->') WITHIN GROUP (GRAPH PATH) AS Friends
+		,LAST_VALUE(Person2.user_id) WITHIN GROUP (GRAPH PATH) AS LastNode
+	FROM FinalUser AS Person1
+		,FinalFriend FOR PATH AS fo
+		,FinalUser FOR PATH AS Person2
+	WHERE MATCH(SHORTEST_PATH(Person1(-(fo)-> Person2) {1, 2}))
+		AND Person1.user_id = 'SqLjqDFQb4st12C7tt_mFA'
+	) AS Paths
+WHERE Paths.LastNode
+	IN (
+		SELECT user_id AS review_user_id
+		FROM dbo.Review
+		WHERE business_id = 'n3z1qddNQpRdBjuLspRiwg'
+		)
 GO
 
 -- If the query takes longer than you'd like, check the service tier of the DB

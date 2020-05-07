@@ -33,7 +33,7 @@ GO
 -- List all businesses within 5 miles of the stadium and categorized as food-related
 DECLARE @univPhoenixStadium GEOGRAPHY
 
-SET @univPhoenixStadium = GEOGRAPHY::Point(33.528, - 112.263, 4326)
+SET @univPhoenixStadium = GEOGRAPHY::Point(33.528, -112.263, 4326)
 
 SELECT TOP (10) B.business_name
 	,B.business_address
@@ -43,7 +43,7 @@ SELECT TOP (10) B.business_name
 	,longitude
 FROM Business B
 WHERE business_state = 'AZ'
-	AND @univPhoenixStadium.STDistance(GEOGRAPHY::Point(latitude, longitude, 4326)) < (5.0 * 1609.344)
+	AND @univPhoenixStadium.STDistance(geo_location) < (5.0 * 1609.344) -- 1609.344 is meters / mile
 	AND (
 		SELECT COUNT(*)
 		FROM BusinessCategory BC

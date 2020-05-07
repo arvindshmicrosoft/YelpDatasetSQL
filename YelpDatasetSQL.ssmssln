@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 18.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65DD0831-8370-4F41-9647-16D3169A2ABF}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "A_Setup", "A_Setup", "{368DA826-5333-4AA2-A439-45351FC459C7}"
+	ProjectSection(SolutionItems) = preProject
+		A_Setup\0_CreateDB.sql = A_Setup\0_CreateDB.sql
+		A_Setup\1_AzureSQLObjects.sql = A_Setup\1_AzureSQLObjects.sql
+		A_Setup\1_SQLServerObjects.sql = A_Setup\1_SQLServerObjects.sql
+		A_Setup\LineByLine.xml = A_Setup\LineByLine.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "B_DataImport", "B_DataImport", "{86BEFC0B-F5D7-4E6F-BB59-F4370062CFDA}"
+	ProjectSection(SolutionItems) = preProject
+		B_DataImport\1_ImportYelpDataset.sql = B_DataImport\1_ImportYelpDataset.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C_Graphs", "C_Graphs", "{E7765060-8B43-41D6-9621-351A55ACC161}"
+	ProjectSection(SolutionItems) = preProject
+		C_Graphs\1_ConvertToGraph.sql = C_Graphs\1_ConvertToGraph.sql
+		C_Graphs\2_GraphAlgorithms.sql = C_Graphs\2_GraphAlgorithms.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "D_NotJustSQL", "D_NotJustSQL", "{47FA4E02-4A7B-44E0-B66A-BA22CD3E01DC}"
+	ProjectSection(SolutionItems) = preProject
+		D_NotJustSQL\1_FTSExamples.sql = D_NotJustSQL\1_FTSExamples.sql
+		D_NotJustSQL\2_SpatialQuery.sql = D_NotJustSQL\2_SpatialQuery.sql
+		D_NotJustSQL\3_HotelSearch.sql = D_NotJustSQL\3_HotelSearch.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "E_MachineLearning", "E_MachineLearning", "{6ED17409-234D-4225-A045-C0129D571A6E}"
+	ProjectSection(SolutionItems) = preProject
+		E_MachineLearning\1_ReviewTextClassification.sql = E_MachineLearning\1_ReviewTextClassification.sql
+		E_MachineLearning\2_WordCloud.sql = E_MachineLearning\2_WordCloud.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "F_Cleanup", "F_Cleanup", "{324C766E-2903-4A4E-A3DA-B0471C68856C}"
+	ProjectSection(SolutionItems) = preProject
+		F_Cleanup\AzureSQL_Cleanup.sql = F_Cleanup\AzureSQL_Cleanup.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{555524F6-7AA9-41D6-BA74-8C5B3DECB9D6}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B64E3324-3F08-48CF-8C10-B3845E3A1DCB}
+	EndGlobalSection
+EndGlobal

@@ -1,6 +1,11 @@
 /*
-This sample code shows how to import and work with the Yelp Dataset (https://www.yelp.com/dataset_challenge) using Microsoft SQL Server 2017.
-Please first review the terms of use for the dataset on the Yelp website (https://www.yelp.com/html/pdf/Dataset_Challenge_Academic_Dataset_Agreement.pdf).
+This sample code shows how to import and work with the Yelp Dataset (https://www.yelp.com/dataset/) using
+the Microsoft SQL family of products and services. Tested with Azure SQL DB and with SQL Server 2019
+
+Please first review the terms of use and documenation for the Yelp dataset
+at https://www.yelp.com/dataset/documentation/main
+
+Your use of these sample T-SQL scripts is also subject to standard license terms and legal terms - see footer for those
 */
 
 /*
@@ -111,6 +116,27 @@ GO
 -- ===================== END Graph Traversal EXAMPLE 2 =====================
 
 -- ===================== Graph Traversal EXAMPLE 3 =====================
+-- Using SHORTEST_PATH (Azure SQL, SQL Server 2019+ only)
+DECLARE @OriginUser AS VARCHAR (100) = 'V8M1Txtrx0SomcnhxfDM5A';
+DECLARE @DestUser AS VARCHAR (100) = 'aT_AzbpcsbodNNtFzPqRVg';
+
+SELECT PersonName, Friends
+FROM (
+	SELECT
+		Person1.user_id AS PersonName,
+		STRING_AGG(Person2.user_id, '->') WITHIN GROUP (GRAPH PATH) AS Friends,
+		LAST_VALUE(Person2.user_id) WITHIN GROUP (GRAPH PATH) AS LastNode
+	FROM
+		FinalUser AS Person1,
+		FinalFriend FOR PATH AS fo,
+		FinalUser FOR PATH  AS Person2
+	WHERE MATCH(SHORTEST_PATH(Person1(-(fo)->Person2)+))
+	AND Person1.user_id = @OriginUser
+) AS Q
+WHERE Q.LastNode = @DestUser
+-- ===================== END Graph Traversal EXAMPLE 3 =====================
+
+-- ===================== Graph Traversal EXAMPLE 4 =====================
 -- Next, compute single source shortest path (distance only)
 -- This outputs shortest paths from the given start node to each of the nodes
 -- which are reachable from this start node. Note again that this query only
@@ -147,9 +173,9 @@ FROM   #t;
 
 DROP TABLE #t;
 GO
--- ===================== END Graph Traversal EXAMPLE 3 =====================
+-- ===================== END Graph Traversal EXAMPLE 4 =====================
 
--- ===================== Graph Traversal EXAMPLE 4 =====================
+-- ===================== Graph Traversal EXAMPLE 5 =====================
 -- Finally, compute single source shortest path (with full path) to all other nodes
 -- This takes a bit longer than Example 3 above for obvious reasons
 CREATE TABLE #t (
@@ -197,18 +223,18 @@ GO
 -- ===================== END Graph Traversal EXAMPLE 4 =====================
 
 /*
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-SOFTWARE. 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-This sample code is not supported under any Microsoft standard support program or service.  
-The entire risk arising out of the use or performance of the sample scripts and documentation remains with you.  
-In no event shall Microsoft, its authors, or anyone else involved in the creation, production, or delivery of the scripts 
-be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, 
-business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability 
-to use the sample scripts or documentation, even if Microsoft has been advised of the possibility of such damages. 
+This sample code is not supported under any Microsoft standard support program or service.
+The entire risk arising out of the use or performance of the sample scripts and documentation remains with you.
+In no event shall Microsoft, its authors, or anyone else involved in the creation, production, or delivery of the scripts
+be liable for any damages whatsoever (including, without limitation, damages for loss of business profits,
+business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability
+to use the sample scripts or documentation, even if Microsoft has been advised of the possibility of such damages.
 */

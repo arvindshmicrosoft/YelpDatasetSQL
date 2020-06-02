@@ -20,7 +20,43 @@ GO
 :setvar businessJSONFilePath 'Yelp/yelp_academic_dataset_business.json'
 :setvar formatFilePath 'Yelp/LineByLine.xml'
 
-DROP VIEW dbo.BusinessJSON
+DROP VIEW IF EXISTS [dbo].[BusinessJSON];
+
+DROP VIEW IF EXISTS [dbo].[CheckinJSON];
+
+DROP VIEW IF EXISTS [dbo].[ReviewJSON];
+
+DROP VIEW IF EXISTS [dbo].[TipJSON];
+
+DROP VIEW IF EXISTS [dbo].[UserJSON];
+
+DROP TABLE IF EXISTS [dbo].[FinalUser];
+
+DROP TABLE IF EXISTS [dbo].[FinalFriend];
+
+DROP TABLE IF EXISTS [dbo].[YelpUserFriend];
+
+DROP TABLE IF EXISTS [dbo].[YelpUser];
+
+DROP TABLE IF EXISTS [dbo].[Tip];
+
+DROP TABLE IF EXISTS [dbo].[Review];
+
+DROP TABLE IF EXISTS [dbo].[Checkin];
+
+DROP TABLE IF EXISTS [dbo].[BusinessCategory];
+
+DROP TABLE IF EXISTS [dbo].[Business];
+
+DROP EXTERNAL DATA SOURCE YelpDataContainer;
+
+DROP DATABASE SCOPED CREDENTIAL BlobSASCred;
+
+DROP MASTER KEY;
+
+
+
+
 drop external DATA SOURCE YelpDataContainer
 drop DATABASE SCOPED CREDENTIAL BlobSASCred
 DROP MASTER KEY

@@ -16,9 +16,7 @@ FROM Business
 GO
 
 -- Review all the business establishments (in this dataset) located in Arizona
-SELECT GEOGRAPHY::Point(latitude, longitude, 4326)
-	,latitude
-	,longitude
+SELECT geo_location
 FROM Business
 WHERE business_state = 'AZ'
 GO
@@ -39,8 +37,6 @@ SELECT TOP (10) B.business_name
 	,B.business_address
 	,B.stars
 	,B.geo_location
-	,latitude
-	,longitude
 FROM Business B
 WHERE business_state = 'AZ'
 	AND @univPhoenixStadium.STDistance(geo_location) < (5.0 * 1609.344) -- 1609.344 is meters / mile

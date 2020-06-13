@@ -21,18 +21,18 @@ SELECT TOP (10) B.business_id
 	,B.business_name
 	,B.business_address
 	,B.stars
-	,@univPhoenixStadium.STDistance(GEOGRAPHY::Point(latitude, longitude, 4326)) / 1609.34 as DistanceInMiles
+	,@univPhoenixStadium.STDistance(geo_location) / 1609.34 as DistanceInMiles
 	,B.geo_location
 FROM Business B
 WHERE business_state = 'AZ'
-	AND @univPhoenixStadium.STDistance(GEOGRAPHY::Point(latitude, longitude, 4326)) < (5.0 * 1609.344)
+	AND @univPhoenixStadium.STDistance(geo_location) < (5.0 * 1609.344)
 	AND (
 		SELECT COUNT(*)
 		FROM BusinessCategory BC
 		WHERE B.business_id = BC.business_id
 			AND BC.category = 'HOTELS'
 		) > 0
-ORDER BY @univPhoenixStadium.STDistance(GEOGRAPHY::Point(latitude, longitude, 4326));
+ORDER BY @univPhoenixStadium.STDistance(geo_location);
 GO
 
 -- Let's pretend we are user_id 'SqLjqDFQb4st12C7tt_mFA' and we want to stay at

@@ -129,9 +129,32 @@ FROM UserJSON
 GO
 
 -- ================ Yelp Dataset Import step 4: yelp_academic_dataset_review.json ================
-DROP TABLE IF EXISTS Review
+DROP TABLE IF EXISTS [dbo].[Review];
 GO
 
+CREATE TABLE [dbo].[Review](
+	[review_id] [varchar](100) NOT NULL,
+	[user_id] [varchar](100) NOT NULL,
+	[business_id] [varchar](100) NOT NULL,
+	[stars] [float] NULL,
+	[review_date] [date] NOT NULL,
+	[review_text] [nvarchar](max) NOT NULL,
+	[is_useful] [bit] NULL,
+	[is_funny] [bit] NULL,
+	[is_cool] [bit] NULL
+)
+GO
+
+INSERT
+INTO Review (review_id
+	, [user_id]
+	, business_id
+	, stars
+	, [review_date]
+	, [review_text]
+	, is_useful
+	, is_funny
+	, is_cool)
 SELECT review_id
 	, [user_id]
 	, business_id
@@ -141,7 +164,6 @@ SELECT review_id
 	, is_useful
 	, is_funny
 	, is_cool
-INTO Review
 FROM dbo.ReviewJSON
 CROSS APPLY OPENJSON(SingleLine) WITH (
 		review_id VARCHAR(100) '$.review_id'
@@ -155,6 +177,9 @@ CROSS APPLY OPENJSON(SingleLine) WITH (
 		,is_cool BIT '$.cool'
 		,[item_type] VARCHAR(100) '$.type'
 		) AS Review;
+GO
+
+CREATE CLUSTERED INDEX CL_Review_business_id ON Review (business_id)
 GO
 
 -- ================ Yelp Dataset Import step 5: yelp_academic_dataset_checkin.json ================

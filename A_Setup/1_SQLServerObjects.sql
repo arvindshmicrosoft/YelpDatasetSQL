@@ -19,9 +19,9 @@ IF SERVERPROPERTY ('edition') = 'SQL Azure'
 GO
 
 -- ***** Please change the folder path below to where the extracted JSON files are placed *****
-:setvar dataFolder "C:\YelpDatasetSQLServerData"
+:setvar dataFolder "N:\YelpDatasetSQLServerData"
 -- ***** Please change the folder path below to where the extracted JSON files are placed *****
-:setvar repoFolder "C:\workarea\YelpDatasetSQLServer"
+:setvar repoFolder "C:\workarea\YelpDatasetSQL\A_Setup"
 GO
 
 CREATE OR ALTER VIEW dbo.BusinessJSON
